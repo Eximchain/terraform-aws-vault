@@ -73,6 +73,8 @@ function assert_not_empty {
 function install_supervisord_debian {
   sudo apt-get install -y supervisor
   sudo update-rc.d supervisor defaults
+  # Upgrade to version 3.3.4
+  sudo pip install supervisor --upgrade
 
   create_supervisor_config
   sudo systemctl enable supervisor
