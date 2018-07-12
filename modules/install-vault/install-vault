@@ -137,11 +137,11 @@ function install_dependencies {
 
   if $(has_apt_get); then
     sudo apt-get update -y
-    sudo apt-get install -y awscli curl bsdtar jq
+    sudo apt-get install -y awscli curl unzip jq
     install_supervisord_debian
   elif $(has_yum); then
     sudo yum update -y
-    sudo yum install -y aws curl bsdtar jq
+    sudo yum install -y aws curl unzip jq
     install_supervisord_amazon_linux
   else
     log_error "Could not find apt-get or yum. Cannot install dependencies on this OS."
@@ -198,7 +198,7 @@ function install_binaries {
 
   log_info "Downloading Vault $version from $url to $download_path"
   curl -o "$download_path" "$url"
-  bsdtar -x -f "$download_path" -C /tmp
+  unzip -d /tmp "$download_path"
 
   log_info "Moving Vault binary to $vault_dest_path"
   sudo mv "/tmp/vault" "$vault_dest_path"
